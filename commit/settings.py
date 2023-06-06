@@ -76,7 +76,7 @@ WSGI_APPLICATION = 'commit.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgressql',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'commit-planner',
     }
 }
