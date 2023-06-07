@@ -4,7 +4,10 @@ from .models import Project
 # Create your views here.
 
 def index(request):
-    return render(request, 'index.html')
+    projects = Project.objects.all()
+    return render(request, 'index.html', {'projects': projects})
+
+
 
 def projects_detail(request, project_id):
     project = Project.objects.get(id=project_id)
@@ -14,4 +17,4 @@ def projects_detail(request, project_id):
 
     # instantiate JournalForm to be rendered
     
-    return render(request, 'projects/detail.html')
+    return render(request, 'projects/detail.html', {'project':project})
