@@ -18,11 +18,16 @@
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarColor01">
+            <li class="nav-item">
+              <a class="nav-link active" href="{% url 'about' %}">About
+                <span class="visually-hidden">(current)</span>
+              </a>
+            </li>
             <ul class="navbar-nav me-auto">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Projects</a>
                     <div class="dropdown-menu">
-                      <a class="dropdown-item" href="#">My Projects</a>
+                      <a class="dropdown-item" href="#">Manage My Projects</a>
                       <a class="dropdown-item" href="#">Create New Project</a>
                       <div class="dropdown-divider"></div>
                       <a class="dropdown-item" href="#">Most Recent Project</a>
