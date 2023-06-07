@@ -30,6 +30,10 @@ def projects_detail(request, project_id):
     
     return render(request, 'projects/detail.html', {'project':project})
 
+def tasks_index(request):
+    tasks =  Task.objects.all()
+    return render(request, 'tasks_index.html', {'tasks': tasks})
+
 class ProjectCreate (CreateView):
     model = Project
     fields = ['name', 'technology', 'description', 'links', 'tasks', 'youtube_tutorials', 'journals']

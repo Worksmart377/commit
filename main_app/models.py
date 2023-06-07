@@ -9,7 +9,7 @@ class Task(models.Model):
     name = models.CharField(max_length=100, default='important task')
     description = models.TextField(max_length=300, default='detailed description')
     date = models.DateField('task due date', default='2023-12-30')
-    completed = models.BooleanField(False)
+    completed = models.BooleanField(default=False)
     
     def __str__(self):
         return f'{self.get_name_display()} due on {self.date}'
