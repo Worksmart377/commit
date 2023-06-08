@@ -2,7 +2,11 @@ from django.shortcuts import render, redirect
 from .models import Project, Task, Journal, Video
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from dotenv import load_dotenv
-# import os
+from googleapiclient.discovery import build
+import os
+from decouple import config
+
+from django.views.generic import ListView, DetailView
 # import google_auth_oauthlib.flow
 # import googleapiclient.discovery
 # import googleapiclient.errors
@@ -42,8 +46,6 @@ def task_detail(request, task_id):
     
     # generate a list of entries while excludes the ones containing ids included in the id_list
     entries_task_doesnt_have = Journal.objects.exclude(id__in=id_list)
-
-    # instantiate JournalForm to be rendered
     
     return render(request, 'tasks/task_detail.html', {'task':task})
 
@@ -57,6 +59,26 @@ class ProjectCreate (CreateView):
         return super().form_valid(form)
 
 
+
+API_KEY = config('API_KEY')
+
+
+def configure():
+    key= config('API_KEY')
+    youtube = build('youtube', 'v3', developerKey=key)
+
+    request = youtube.search().list(
+        part="snippet",
+        maxResults=5,
+        q="coding",
+        order= "date",
+        type= 'video'
+    )
+
+    response = request.execute()
+
+    print(response)
+configure()
 # def configure():
 #     load_dotenv()
     
