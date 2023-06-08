@@ -34,6 +34,20 @@ def tasks_index(request):
     tasks =  Task.objects.all()
     return render(request, 'tasks_index.html', {'tasks': tasks})
 
+def task_detail(request, task_id):
+    task = Task.objects.get(id=task_id)
+    # generate a list of ids for all the journals associated with each task
+    id_list = task.entries.all().values_list('id') # [1, 3, 7]
+
+    
+    # generate a list of entries while excludes the ones containing ids included in the id_list
+    entries_task_doesnt_have = Journal.objects.exclude(id__in=id_list)
+
+    # instantiate JournalForm to be rendered
+    
+    return render(request, 'tasks/task_detail.html', {'task':task})
+
+
 class ProjectCreate (CreateView):
     model = Project
     fields = ['name', 'technology', 'description', 'links', 'tasks', 'youtube_tutorials', 'journals']
