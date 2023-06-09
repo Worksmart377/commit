@@ -13,7 +13,7 @@ class Task(models.Model):
     completed = models.BooleanField(default=False)
     
     def __str__(self):
-        return f'{self.name} due on {self.date}'
+        return reverse('task_detail', kwargs={'task_id': self.id})
     
     class Meta:
         ordering = ['date']
@@ -22,7 +22,7 @@ class Task(models.Model):
 class Video(models.Model):
     name = models.CharField(max_length=50) 
     url = models.URLField()     
-    task_name = models.ManyToManyField(Task)
+    task = models.ManyToManyField(Task)
     
     def __str__(self):
         return self.name
@@ -37,9 +37,9 @@ class Project(models.Model):
     name = models.CharField(max_length=100, default='very important project')
     technology = models.CharField(max_length=100)
     description = models.TextField(max_length=300)
-    github_link = models.URLField(max_length=200, default='www.github.com')
+    github = models.URLField(max_length=200, default='www.github.com')
     tasks = models.ForeignKey(Task, on_delete=models.CASCADE, default='very important task')
-    # user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     def __str__(self):
         return self.name
     

@@ -49,6 +49,14 @@ def task_detail(request, task_id):
     
     return render(request, 'tasks/task_detail.html', {'task':task})
 
+def assoc_task(request, project_id, task_id):
+    Project.objects.get(id=project_id).tasks.add(task_id)
+    return redirect('detail', project_id=project_id)
+
+def unassoc_task(request, project_id, task_id):
+    Project.objects.get(id=project_id).tasks.remove(task_id)
+    return redirect('detail', project_id=project_id)
+
 
 class ProjectCreate (CreateView):
     model = Project
@@ -58,12 +66,27 @@ class ProjectCreate (CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
     
+class ProjectUpdate(UpdateView):
+    model = Project
+    fields = "__all__"    
+    
+class ProjectDelete(DeleteView):
+    model = Project
+    success_url = '/projects/'
 class TaskCreate (CreateView):
     model = Task
     fields = ['name', 'description', 'date', 'completed']
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+    
+class TaskUpdate(UpdateView):
+    model = Task
+    fields = "__all__"  
+    
+class TaskDelete(DeleteView):
+    model = Task
+    success_url = '/tasks/'
 
 
 

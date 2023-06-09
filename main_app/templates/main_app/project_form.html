@@ -7,23 +7,31 @@
 {% else %}
     <h1>Add Project</h1>
 {% endif %}
-
+{{ form.non_field_errors }}
 <form action="" method="POST">
     {% csrf_token %}
+    
     <fieldset>
     <div class="form-group">
         <label for="exampleInputEmail1" class="form-label mt-4">Project Name</label>
         <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ object.name }}">
+        <p class="text-warning">{{ form.name.errors }}</p>
     </div>
     <div class="form-group">
         <label for="exampleInputEmail1" class="form-label mt-4">Technology</label>
+        
         <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ object.technology }}">
+        <p class="text-warning">{{ form.technology.errors }}</p>
+
     </div>
     <div class="form-group">
         <label for="exampleInputEmail1" class="form-label mt-4">Description</label>
         <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ object.description }}">
+        <p class="text-warning">{{ form.description.errors }}</p>
+
     </div>
     <div class="form-group">
+       
         <label for="exampleInputEmail1" class="form-label mt-4">GitHub Link</label>
         <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ object.github_link }}">
     </div>
