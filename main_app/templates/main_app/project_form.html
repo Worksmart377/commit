@@ -31,9 +31,8 @@
 
     </div>
     <div class="form-group">
-       
         <label for="exampleInputEmail1" class="form-label mt-4">GitHub Link</label>
-        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ object.github_link }}">
+        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ object.github }}">
     </div>
     <input class="btn btn-primary" type="submit" value="{% if object %} Update Project {% else %} Add Project {% endif %}">
     </fieldset>

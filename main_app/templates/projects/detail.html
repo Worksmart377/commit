@@ -83,4 +83,8 @@
       </tr>
     </tbody>
   </table>
+  <div class="nav-item">
+    <a class="nav-link bg-light" href="{% url 'project_update' object.id %}">Edit</a>
+    <a class="nav-link bg-dark" href="{% url 'project_update' object.id %}">Delete</a>
+  </div>
 {% endblock %}

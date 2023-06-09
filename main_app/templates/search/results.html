@@ -6,7 +6,8 @@
     <div class="card-header">{{ response.title }}</div>
     <div class="card-body">
       <h4 class="card-title">{{ response.channelTitle }}</h4>
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      <img src="{{response.thumbnails[0]}}" alt="">
+      <p class="card-text">{{ response.description }}</p>
     </div>
   </div>
 

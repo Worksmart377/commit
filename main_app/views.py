@@ -5,7 +5,6 @@ from dotenv import load_dotenv
 from googleapiclient.discovery import build
 import os
 from decouple import config
-
 from django.views.generic import ListView, DetailView
 # import google_auth_oauthlib.flow
 # import googleapiclient.discovery
@@ -18,21 +17,15 @@ def index(request):
     return render(request, 'index.html', {'projects': projects})
 
 def about(request):
-    # Include an .html file extension - unlike when rendering EJS templates (.ejs extension)
     return render(request, 'about.html')
 
 def projects_detail(request, project_id):
     project = Project.objects.get(id=project_id)
-    # generate a list of ids for all the tasks associated with each task
-    id_list = project.tasks.all().values_list('id') # [1, 3, 7]
-
-    
-    # generate a list of tasks while excludes the ones containing ids included in the id_list
-    tasks_project_doesnt_have = Task.objects.exclude(id__in=id_list)
-
-    # instantiate JournalForm to be rendered
-    
+    id_list = project.tasks.all().values_list('id') 
+    tasks_project_doesnt_have = Task.objects.exclude(id__in=id_list)    
     return render(request, 'projects/detail.html', {'project':project})
+
+
 
 def tasks_index(request):
     tasks =  Task.objects.all()
@@ -40,27 +33,22 @@ def tasks_index(request):
 
 def task_detail(request, task_id):
     task = Task.objects.get(id=task_id)
-    # generate a list of ids for all the journals associated with each task
-    id_list = task.entries.all().values_list('id') # [1, 3, 7]
-
-    
-    # generate a list of entries while excludes the ones containing ids included in the id_list
+    id_list = task.entries.all().values_list('id') 
     entries_task_doesnt_have = Journal.objects.exclude(id__in=id_list)
-    
     return render(request, 'tasks/task_detail.html', {'task':task})
 
 def assoc_task(request, project_id, task_id):
-    Project.objects.get(id=project_id).tasks.add(task_id)
-    return redirect('detail', project_id=project_id)
+    Project.objects.filter(id=project_id).tasks.add(task_id)
+    return redirect('task_list', project_id=project_id)
 
 def unassoc_task(request, project_id, task_id):
-    Project.objects.get(id=project_id).tasks.remove(task_id)
+    Project.objects.filter(id=project_id).tasks.remove(task_id)
     return redirect('detail', project_id=project_id)
 
 
 class ProjectCreate (CreateView):
     model = Project
-    fields = ['name', 'technology', 'description', 'github_link']
+    fields = ['name', 'technology', 'description', 'github']
     # success_url = '/cats/' # not the preferred way 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -87,6 +75,9 @@ class TaskUpdate(UpdateView):
 class TaskDelete(DeleteView):
     model = Task
     success_url = '/tasks/'
+    
+class TaskList(ListView):
+    model = Task
 
 
 
@@ -107,7 +98,7 @@ def configure():
 
     response = request.execute()
 
-    print(response)
+    print(response.title[0])
 configure()
 # def configure():
 #     load_dotenv()
