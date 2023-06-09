@@ -37,7 +37,7 @@ class Project(models.Model):
     name = models.CharField(max_length=100, default='very important project')
     technology = models.CharField(max_length=100)
     description = models.TextField(max_length=300)
-    links = models.URLField(max_length=200, default='www.github.com')
+    github_link = models.URLField(max_length=200, default='www.github.com')
     tasks = models.ForeignKey(Task, on_delete=models.CASCADE, default='very important task')
     # user = models.ForeignKey(User, on_delete=models.CASCADE)
     def __str__(self):

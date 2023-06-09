@@ -52,8 +52,15 @@ def task_detail(request, task_id):
 
 class ProjectCreate (CreateView):
     model = Project
-    fields = ['name', 'technology', 'description', 'links', 'tasks', 'youtube_tutorials', 'journals']
+    fields = ['name', 'technology', 'description', 'github_link']
     # success_url = '/cats/' # not the preferred way 
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+    
+class TaskCreate (CreateView):
+    model = Task
+    fields = ['name', 'description', 'date', 'completed']
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)

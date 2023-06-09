@@ -8,11 +8,8 @@
     <h1>Add Project</h1>
 {% endif %}
 
-<form action="" method="post">
+<form action="" method="POST">
     {% csrf_token %}
-    <table>
-        {{ form.as_table }}
-    </table>
     <fieldset>
     <div class="form-group">
         <label for="exampleInputEmail1" class="form-label mt-4">Project Name</label>
@@ -21,6 +18,14 @@
     <div class="form-group">
         <label for="exampleInputEmail1" class="form-label mt-4">Technology</label>
         <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ object.technology }}">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputEmail1" class="form-label mt-4">Description</label>
+        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ object.description }}">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputEmail1" class="form-label mt-4">GitHub Link</label>
+        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ object.github_link }}">
     </div>
     <input class="btn btn-primary" type="submit" value="{% if object %} Update Project {% else %} Add Project {% endif %}">
     </fieldset>
