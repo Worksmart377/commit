@@ -6,11 +6,26 @@ from googleapiclient.discovery import build
 import os
 from decouple import config
 from django.views.generic import ListView, DetailView
-# import google_auth_oauthlib.flow
-# import googleapiclient.discovery
-# import googleapiclient.errors
+import google_auth_oauthlib.flow
+import googleapiclient.discovery
+import googleapiclient.errors
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from oauth2_provider.decorators import protected_resource
+from oauth2_provider.views.generic import ProtectedResourceView
+from django.http import HttpResponse
+import random
+from django.http import JsonResponse
+
+
 
 # Create your views here.
+
+def random_class(pick):
+    choices = ["table-primary", "table-secondary", "table-success", "table-danger", "table-warning", "table-info", "table-active"]
+    pick = random.choice(choices)
+    
+    random_class(pick)
 
 def index(request):
     projects = Project.objects.all()
@@ -21,9 +36,12 @@ def about(request):
 
 def projects_detail(request, project_id):
     project = Project.objects.get(id=project_id)
-    id_list = project.tasks.all().values_list('id') 
-    tasks_project_doesnt_have = Task.objects.exclude(id__in=id_list)    
-    return render(request, 'projects/detail.html', {'project':project})
+    tasks = Task.objects.filter(id=project_id)
+    # id_list = tasks.project.all().values_list('id')
+    # project_task_doesnt_have = Project.objects.exclude(id__in=id_list)
+    
+    
+    return render(request, 'projects/detail.html', {'project':project, "tasks": tasks})
 
 
 
@@ -37,15 +55,20 @@ def task_detail(request, task_id):
     entries_task_doesnt_have = Journal.objects.exclude(id__in=id_list)
     return render(request, 'tasks/task_detail.html', {'task':task})
 
-def assoc_task(request, project_id, task_id):
-    Project.objects.filter(id=project_id).tasks.add(task_id)
-    return redirect('task_list', project_id=project_id)
+# def assoc_task(request, project_id, task_id):
+#     Project.objects.filter(id=project_id).tasks.add(task_id)
+#     return redirect('task_list', project_id=project_id)
 
-def unassoc_task(request, project_id, task_id):
-    Project.objects.filter(id=project_id).tasks.remove(task_id)
-    return redirect('detail', project_id=project_id)
+# def unassoc_task(request, project_id, task_id):
+#     Project.objects.filter(id=project_id).tasks.remove(task_id)
+#     return redirect('detail', project_id=project_id)
 
 
+class ApiEndpoint(ProtectedResourceView):
+    def get(self, request, *args, **kwargs):
+        return HttpResponse('Hello, OAuth2!')
+
+    
 class ProjectCreate (CreateView):
     model = Project
     fields = ['name', 'technology', 'description', 'github']
@@ -80,60 +103,30 @@ class TaskList(ListView):
     model = Task
 
 
-
+    
+    
 API_KEY = config('API_KEY')
 
+def search_results(request):
+    searched = request.GET.get('searched', '')  
+    if searched:
+        # Perform the search
+        key = config('API_KEY')
+        youtube = build('youtube', 'v3', developerKey=key)
+        request = youtube.search().list(
+            part="snippet",
+            maxResults=5,
+            q=searched,
+            order="date",
+            type='video'
+        )
 
-def configure():
-    key= config('API_KEY')
-    youtube = build('youtube', 'v3', developerKey=key)
+        results = request.execute()
+        # results_json = results.JsonResponse()
+        # results_json.content
 
-    request = youtube.search().list(
-        part="snippet",
-        maxResults=5,
-        q="coding",
-        order= "date",
-        type= 'video'
-    )
+        print(results)
+        return render(request, 'search/results.html', {'results': results})
+    else:
+        return render(request, 'search/results.html', {'results': {}})
 
-    response = request.execute()
-
-    print(response.title[0])
-configure()
-# def configure():
-#     load_dotenv()
-    
-# def get_user_search(session, input):
-#     url = f"https://www.googleapis.com/youtube/v3/searchq={input}&appid={os.getenv(api_key)}
-# "
-
-
-# scopes = ["https://www.googleapis.com/auth/youtube.force-ssl"]
-
-# def main():
-#     # Disable OAuthlib's HTTPS verification when running locally.
-#     # *DO NOT* leave this option enabled in production.
-#     os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
-
-#     api_service_name = "youtube"
-#     api_version = "v3"
-#     client_secrets_file = "{load_dotenv}"
-
-#     # Get credentials and create an API client
-#     flow = google_auth_oauthlib.flow.InstalledAppFlow.from_client_secrets_file(
-#         client_secrets_file, scopes)
-#     credentials = flow.run_console()
-#     youtube = googleapiclient.discovery.build(
-#         api_service_name, api_version, credentials=credentials)
-
-#     request = youtube.search().list(
-#         part="snippet",
-#         maxResults=25,
-#         q="coding"
-#     )
-#     response = request.execute()
-
-#     print(response)
-
-# if __name__ == "__main__":
-#     main()
