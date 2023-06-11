@@ -36,10 +36,11 @@ class Task(models.Model):
     
 class Video(models.Model):
     title = models.CharField(max_length=50) 
-    channel_title = models.CharField(default="great channel")   
-    description = models.CharField(default="great description") 
+    channel_title = models.CharField(max_length=200 ,default="great channel")   
+    description = models.CharField(max_length=200, default="great description") 
     thumbnails_default = models.URLField(default="youtube.com")
     published_at = models.DateTimeField(default="2023-06-11")
+    url = EmbedVideoField(default='youtube.com')
     task = models.ManyToManyField(Task)
     
     def __str__(self):

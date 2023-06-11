@@ -193,23 +193,23 @@ def search_results(request):
     else:
         return render(request, 'search/results.html', {'results': {}})
 
-    def video_query(request):
-        for result in results:
-            video_id = result.id.videoId
-            key = config('API_KEY')
-            youtube = build('youtube', 'v3', developerKey=key)
-            query2 = youtube.video().list(
+def video_query(request, results):  # Pass 'results' as an argument
+    for result in results:
+        video_id = result.id.videoId
+        key = config('API_KEY')
+        youtube = build('youtube', 'v3', developerKey=key)
+        query2 = youtube.video().list(
             part="snippet,id,player",
             id=video_id,
             maxResults=1,
             order="date",
             type='video'
-            )
+        )
 
-        results2 = query2.execute()
+    results2 = query2.execute()
 
-        print(results2)
-        return render(request, 'search/search_index.html', {'results2': results2})
-    video_query()
+    print(results2)
+    return render(request, 'search/search_detail.html', {'results2': results2})
 
+    results = video_query(request, results)  # Pass 'results' as an argument
             
