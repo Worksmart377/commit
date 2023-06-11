@@ -1,20 +1,21 @@
 {% extends 'base.html' %}
+
 {% block content %}
 
-{% for key, result in results.items %}
+<!-- {% for key, result in results.items %} -->
+{% for key, value in results.items %}
+<li>{{key}}: {{value}}, {{results.key}}</li>
 
-<div class="card border-primary mb-3" style="max-width: 20rem;">
+<!-- <div class="card border-primary mb-3" style="max-width: 20rem;">
     <div class="card-header">{{ result.title }}</div>
     <div class="card-body">
       <h4 class="card-title">{{ result.description }}</h4>
       <img src="{{ result.thumbnails }}" alt="">
       <p class="card-text">{{ result.channelTitle }}</p>
     </div>
-  </div>
+  </div> -->
 
-  {% endfor %}
+{% endfor %}
   
-  
-
 
 {% endblock %}

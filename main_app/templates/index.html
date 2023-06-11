@@ -2,6 +2,8 @@
 
 {% block content %}
 <h1>My Projects</h1>
+<div class="project_container">
+
 {% for project in projects %}
 <a href="{% url 'detail' project.id %}">
 <div class="card border-succes mb-3" style="max-width: 20rem;">
@@ -39,4 +41,6 @@
 </a>
 
 {% endfor %}
+</div>
+
 {% endblock %}
