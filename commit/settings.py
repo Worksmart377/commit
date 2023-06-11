@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'oauth2_provider',
     'corsheaders',
     'main_app',
+    'embed_video',
     'allauth.socialaccount.providers.google',
 
     'django.contrib.admin',

@@ -177,20 +177,38 @@ def search_results(request):
         # Perform the search
         key = config('API_KEY')
         youtube = build('youtube', 'v3', developerKey=key)
-        request = youtube.search().list(
+        query = youtube.search().list(
             part="snippet",
-            maxResults=5,
+            maxResults=12,
             q=searched,
             order="date",
             type='video'
         )
 
-        results = request.execute()
+        results = query.execute()
 
         print(results)
         return render(request, 'search/results.html', {'results': results})
     else:
         return render(request, 'search/results.html', {'results': {}})
+    
+    def video_query(request):
+        for result in results:
+            video_id = result.id.videoId
+            key = config('API_KEY')
+        youtube = build('youtube', 'v3', developerKey=key)
+        query2 = youtube.video().list(
+            part="snippet,id,player",
+            id="4kLviL8XwAI",
+            maxResults=1,
+            order="date",
+            type='video'
+            )
+
+        results2 = query2.execute()
+
+        print(results2)
+            
     
     # def display(request, id):
     #     print(request.META['HTTP_REFERER'])

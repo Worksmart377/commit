@@ -1,21 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-<!-- {% for key, result in results.items %} -->
-{% for key, value in results.items %}
-<li>{{key}}: {{value}}, {{results.key}}</li>
-
-<!-- <div class="card border-primary mb-3" style="max-width: 20rem;">
-    <div class="card-header">{{ result.title }}</div>
-    <div class="card-body">
-      <h4 class="card-title">{{ result.description }}</h4>
-      <img src="{{ result.thumbnails }}" alt="">
-      <p class="card-text">{{ result.channelTitle }}</p>
+<div class="video-container">
+{% for result in results.items %}
+<a href="{% url 'search_detail' %}">
+<div class="card border-info mb-3" style="max-width: 20rem;">
+  <div class="card-header">Header</div>
+  <div class="card-body">
+    <h4 class="card-title">{{result.snippet.title}}</h4>
+    <div class="thumbnail">
+      <img src="{{result.snippet.thumbnails.medium.url}}" alt="video thumbnail">
     </div>
-  </div> -->
-
+    <p class="card-text">{{result.snippet.description}}</p>
+  </div>
+</div>
+</a>
 {% endfor %}
-  
+</div>
+
 
 {% endblock %}
