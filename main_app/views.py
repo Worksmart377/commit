@@ -189,17 +189,18 @@ def search_results(request):
 
         print(results)
         return render(request, 'search/results.html', {'results': results})
+
     else:
         return render(request, 'search/results.html', {'results': {}})
-    
+
     def video_query(request):
         for result in results:
             video_id = result.id.videoId
             key = config('API_KEY')
-        youtube = build('youtube', 'v3', developerKey=key)
-        query2 = youtube.video().list(
+            youtube = build('youtube', 'v3', developerKey=key)
+            query2 = youtube.video().list(
             part="snippet,id,player",
-            id="4kLviL8XwAI",
+            id=video_id,
             maxResults=1,
             order="date",
             type='video'
@@ -208,18 +209,7 @@ def search_results(request):
         results2 = query2.execute()
 
         print(results2)
-            
-    
-    # def display(request, id):
-    #     print(request.META['HTTP_REFERER'])
-    # try:
-    #     short_url = UrlSave.objects.get(pk=id)
-    #     visit_time = short_url.times_visited
-    #     short_url.times_visited = short_url.times_visited+1
-    #     url = short_url.to_view
-    #     short_url.save()
-    #     context = {'visit':visit_time,'url':url}
-    #     return render(request,'shorturl/previsit.html',context)
-    # except:
-    #     return HttpResponse('Wrong Url')
+        return render(request, 'search/search_index.html', {'results2': results2})
+    video_query()
 
+            
