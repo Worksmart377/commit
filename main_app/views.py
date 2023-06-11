@@ -18,6 +18,7 @@ from django.http import HttpResponse
 import random
 from django.http import HttpRequest
 from django.contrib.auth.forms import UserCreationForm
+from .forms import JournalForm
 # from .models import UrlSave
 
 
@@ -39,16 +40,14 @@ def about(request):
 @login_required
 def projects_detail(request, project_id):
     project = Project.objects.get(id=project_id)
-    # tasks = Task.objects.filter(id=project_id)
     id_list = Task.project.all().values_list('id')
-    tasks_project_doesnt_have = Project.objects.exclude(id__in=id_list)
+    tasks_project_doesnt_have = project.objects.exclude(id__in=id_list)
+    return render(request, 'projects/detail.html', 
+    {
+        'project': project,
+        'tasks': tasks_project_doesnt_have
+    })
     
-    
-    return render(request, 'projects/detail.html', {
-        'project':project,
-        "tasks": tasks_project_doesnt_have,
-        
-        })
     
 @login_required
 def tasks_index(request):
@@ -60,7 +59,31 @@ def task_detail(request, task_id):
     task = Task.objects.get(id=task_id)
     id_list = task.entries.all().values_list('id') 
     entries_task_doesnt_have = Journal.objects.exclude(id__in=id_list)
-    return render(request, 'tasks/task_detail.html', {'task':task})
+    journal_form = JournalForm()
+
+    return render(request, 'tasks/task_detail.html', {
+    'task':task,         
+    'journal_form': journal_form,
+    'entries':entries_task_doesnt_have
+})
+
+@login_required
+def add_entry(request, task_id):
+    form = JournalForm(request.POST)
+
+    # validate the form
+    if form.is_valid():
+        new_entry = form.save(commit=False)
+        new_entry.task_id = task_id
+        '''
+        {
+            title: 'lovely entry',
+            date: '2023-06-11',
+            task_id: 1
+        }
+        '''
+        new_entry.save()
+    return redirect('detail', task_id=task_id)
 
 
 LoginRequiredMixin, 
@@ -124,6 +147,24 @@ class TaskDelete(LoginRequiredMixin, DeleteView):
     
 class TaskList(LoginRequiredMixin, ListView):
     model = Task
+    
+class EntryCreate (LoginRequiredMixin, CreateView):
+    model = Journal
+    fields = '__all__'
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+    
+class EntryUpdate(LoginRequiredMixin, UpdateView):
+    model = Journal
+    fields = "__all__"  
+    
+class EntryDelete(LoginRequiredMixin, DeleteView):
+    model = Journal
+    success_url = '/journals/'
+    
+class EntryList(LoginRequiredMixin, ListView):
+    model = Journal
 
 
     

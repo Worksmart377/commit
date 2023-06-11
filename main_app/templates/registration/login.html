@@ -2,16 +2,13 @@
 {% block content %}
 
 <h1>Log In</h1>
-<!-- Add the login form -->
+
+<p class="red-text">{{ error_message }}</p>
+
 <form method="POST" action="{% url 'login' %}">
     {% csrf_token %}
-    <div class="form-group">
-        <label for="exampleInputEmail1" class="form-label mt-4">Email address</label>
-        <input type="hidden" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="next" value="{{ next }}">
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-      </div>
-    <button type="submit" class="btn btn-primary">Log In</button>
-  </form>
-  
+    {{ form.as_p }}
+    <input type="submit" class="btn" value="Log In">
+</form>
 
 {% endblock %}
