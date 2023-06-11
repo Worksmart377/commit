@@ -34,12 +34,15 @@ class Task(models.Model):
         
     
 class Video(models.Model):
-    name = models.CharField(max_length=50) 
-    url = models.URLField()     
+    title = models.CharField(max_length=50) 
+    channel_title = models.CharField(default="great channel")   
+    description = models.CharField(default="great description") 
+    thumbnails_default = models.URLField(default="youtube.com")
+    published_at = models.DateTimeField(default="2023-06-11")
     task = models.ManyToManyField(Task)
     
     def __str__(self):
-        return self.name
+        return self.title
         
 class Journal(models.Model):
     title = models.CharField(max_length=100)
@@ -47,5 +50,10 @@ class Journal(models.Model):
     entry = models.TextField(max_length=5000)
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
     
-
+    def __str__(self):
+        return self.title
+    
+    
+    class Meta:
+        ordering = ['-date']
 
