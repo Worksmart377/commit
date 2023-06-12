@@ -4,7 +4,7 @@
 
 <h1>{{ project.name }}</h1>
 <div class="progress">
-  <div class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+  <div class="progress-bar bg-success" role="progressbar" style="{% if task.completed %}width: 100%{% else %}width:50%{% endif %};" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
 </div>
 <br>
 <div class="alert alert-dismissible alert-warning">
@@ -12,13 +12,14 @@
     <h4 class="alert-heading">Decription</h4>
     <p class="mb-0">{{ project.description }}</p>
     <a href="{{ project.github }}"class="mb-0">{{ project.github }}</a>
+    <div class="nav-item pills">
+      <a class="btn badge bg-light" href="{% url 'project_update' project.id %}">Edit</a>
+      <a class="btn badge bg-dark" href="{% url 'project_delete' project.id %}">Delete</a>
+    </div>
   </div>
+  
   <br>
-  <div class="nav-item">
-    <a class="btn btn-outline-light" href="{% url 'project_update' project.id %}">Edit</a>
-    <a class="btn btn-outline-dark" href="{% url 'project_delete' project.id %}">Delete</a>
-  </div>
-  <br>
+
 <table class="table table-hover">
     <thead>
       <tr>
@@ -28,10 +29,12 @@
     <tbody>
     
       {% for task in tasks %}
+      
       <tr class="table-secondary">
-        <th scope="row">{{ task.name }}</th>
+      <a href="{% url 'task_detail' task.id %}"></a><th scope="row">{{ task.name }}</th></a>
       </tr>
       {% endfor %}
     </tbody>
   </table>
+
 {% endblock %}

@@ -4,11 +4,11 @@
   {% for result in results.items %}
   <a href="" name="video_player">
   <div class="card border-info mb-3" style="max-width: 20rem;">
-    <div class="card-header">Header</div>
+    <div class="card-header">Video Info</div>
     <div class="card-body">
       <h4 class="card-title">{{result.snippet.title}}</h4>
       <div class="thumbnail">
-        <img src="{{result.snippet.thumbnails.medium.url}}" alt="video thumbnail">
+        <img src="{{result.snippet.thumbnails.default.url}}" alt="video thumbnail">
       </div>
       <p class="card-text">{{result.snippet.description}}</p>
       <p class="card-text">{{result.snippet.publishedAt}}</p>

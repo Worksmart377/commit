@@ -30,9 +30,31 @@ nav {
 
 }
 
+.task_detail_container{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+
+}
+.task_container{
+    margin-right: 50px;
+
+}
+
+.col.s6{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 80px;
+}
+
 .card.border-info.mb-3{
     width: 350px;
 
+}
+
+.nav-item.pills{
+    margin-top: 10px;
 }
 
 .thumbnail{

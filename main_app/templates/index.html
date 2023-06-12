@@ -12,28 +12,31 @@
         <h4 class="card-title">{{ project.name }}</h4>
         <ul class="list-group">
             <li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center">
-                Technology: {{ project.technology }}
-                <span class="badge bg-primary rounded-pill"></span>
+                Technology:
+                {{ project.technology }}
+                <p class="badge bg-primary rounded-pill"></p>
             </li>
             <li class="list-group-item list-group-item-secondary d-flex justify-content-between align-items-center">
-                Description: {{ project.description }}
-                <span class="badge bg-primary rounded-pill"></span>
+                Description: 
+                {{ project.description }}
+                <p class="badge bg-primary rounded-pill"></p>
             </li>
-            <li class="links list-group-item list-group-item-success d-flex justify-content-between align-items-center ">
-                GitHub Link: {{ project.github }} 
-                <span class="badge bg-primary rounded-pill"></span>
+            <li class="links list-group-item list-group-item-success d-flex justify-content-between align-items-center " >
+                <p style="color: #3c3b3b;">GitHub Link:</p> 
+                <a href="{{ project.github }}" class="fa-brands fa-github fa-2xl" style="color: #13a3d4;"></a> 
+                <p class="badge bg-primary rounded-pill"></p>
             </li>
             <li class="list-group-item list-group-item-info d-flex justify-content-between align-items-center">
                 Journal Entries:
-                <span class="badge bg-primary rounded-pill"></span>
+                <p class="badge bg-primary rounded-pill"></p>
             </li>
             <li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center">
                 Playlists:
-                <span class="badge bg-primary rounded-pill"></span>
+                <p class="badge bg-primary rounded-pill"></p>
             </li>
             <li class="list-group-item list-group-item-danger d-flex justify-content-between align-items-center">
-                Images:
-                <span class="badge bg-primary rounded-pill"></span>
+                <p class="text-success-emphasis">Images:</p>
+                <p class="badge bg-primary rounded-pill"></p>
             </li>
         </ul>  
     </div>

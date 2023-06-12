@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Journal Entry Detail</h1>
+<div class="entry_detail_container">
+  <div class="entry_container">
+    <div class="card border-info mb-3" style="max-width: 20rem;">
+      <div class="card-header">{{ entry.title }}</div>
+      <div class="card-body">
+        <h4 class="card-title">{{ entry.date }}</h4>
+        <p class="card-text">{{ entry.entry }}</p>
+        <div class="">
+          <a class="btn badge bg-light" href="{% url 'entry_update' entry.id %}">Edit</a>
+          <a class="btn badge bg-dark" href="{% url 'entry_delete' entry.id %}">Delete</a>
+      </div>
+      </div>
+      </div>
+</div>
+
+{% endblock %}

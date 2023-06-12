@@ -65,14 +65,14 @@ def tasks_index(request):
 def task_detail(request, task_id):
     task = Task.objects.get(id=task_id)
     id_list = task.entries.all().values_list('id') 
-    entries_task_doesnt_have = Journal.objects.exclude(id__in=id_list)
+    entries_task_does_have = Journal.objects.filter(id__in=id_list)
     journal_form = JournalForm()
     print(task)
     return render(request, 'tasks/task_detail.html', {
     'task': task,
     'id_list': id_list,         
     'journal_form': journal_form,
-    'entries':entries_task_doesnt_have
+    'entries':entries_task_does_have
 })
 
 @login_required
@@ -98,7 +98,7 @@ def add_entry(request, task_id):
         }
         '''
         new_entry.save()
-    return redirect('detail', task_id=task_id)
+    return redirect('task_detail', task_id=task_id)
 
 @login_required
 def assoc_entry(request, task_id, entry_id):
@@ -144,7 +144,7 @@ class CustomLoginView(LoginView):
     
 class ProjectCreate (LoginRequiredMixin, CreateView):
     model = Project
-    fields = ['name', 'technology', 'description', 'github']
+    fields = ['name', 'technology', 'description', 'github', "tasks"]
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)

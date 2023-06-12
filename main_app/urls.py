@@ -22,6 +22,7 @@ urlpatterns = [
         path('tasks/<int:task_id>/', views.task_detail, name='task_detail'),
         path('tasks/create/', views.TaskCreate.as_view(), name='task_create'),
         path('journals/<int:entry_id>/', views.entry_detail, name='entry_detail'),
+        path('journals/<int:entry_id>/', views.add_entry, name='add_entry'),
         path('journals/<int:pk>/delete/', views.EntryDelete.as_view(), name='entry_delete'),
         path('journals/<int:pk>/update/', views.EntryUpdate.as_view(), name='entry_update'),
 

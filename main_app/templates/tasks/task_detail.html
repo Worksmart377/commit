@@ -3,59 +3,57 @@
 {% block content %}
 
 <h1>Task Detail</h1>
-<div class="modal">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title">{{ task.name }}</h5>
-            <h3 class="modal-title">{{ task.date }}</h5>
-            <span aria-hidden="true"></span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <p>{{ task.description }}</p>
-        </div>
-        <div class="modal-footer">
-          <a class="btn btn-outline-light" href="{% url 'task_update' task.id %}">Edit</a>
-          <a class="btn btn-outline-dark" href="{% url 'task_delete' task.id %}">Delete</a>
+<div class="task_detail_container">
+  <div class="task_container">
+    <div class="card border-info mb-3" style="max-width: 20rem;">
+      <div class="card-header">{{ task.name }}</div>
+      <div class="card-body">
+        <h4 class="card-title">{{ task.date }}</h4>
+        <p class="card-text">{{ task.description }}</p>
+        <div class="">
+          <a class="btn badge bg-light" href="{% url 'task_update' task.id %}">Edit</a>
+          <a class="btn badge bg-dark" href="{% url 'task_delete' task.id %}">Delete</a>
       </div>
-        </div>
-    </div>
-    </div>
-    <hr>
+      </div>
+      </div>
+</div>
 
-    {% for item in id_list %}
-    <a href="{% url 'entry_detail' item.id %}">
-        <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-                <strong class="me-auto">{{ item.title }}</strong>
-                <small>{{ item.date }}</small>
-                <button type="button" class="btn-close ms-2 mb-1" data-bs-dismiss="toast" aria-label="Close">
-                    <span aria-hidden="true"></span>
-                </button>
-            </div>
-            <div class="toast-body">
-                <p>{{ item.entry }}</p>
-            </div>
-        </div>
-    </a>
+{% for item in entries_task_does_have %}
+<a href="">
+  <div class="journal_container">
+    <div class="card border-info mb-3" style="max-width: 20rem;">
+      <div class="card-header">{{ item.title }}</div>
+      <div class="card-body">
+        <h4 class="card-title">{{ item.date }}</h4>
+        <p class="card-text">{{ item.entry }}</p>
+        <div class="">
+          <a class="btn badge bg-light" href="{% url 'entry_update' entry.id %}">Edit</a>
+          <a class="btn badge bg-dark" href="{% url 'entry_delete' entry.id %}">Delete</a>
+      </div>
+      </div>
+      </div>
+  </div>
+ </a>   
+
 {% endfor %}
 
-
-
-
-
-
-
-<hr>
     <div class="col s6">
-  
+      <h4>Add Journal Entry</h4>
+
+      <form action="{% url 'add_entry' task.id %}" method="POST">
+          {% csrf_token %}
+          <!-- Render the inputs -->
+          {{ journal_form.as_p }}
+          <input type="submit" class="btn btn-outline-primary" value="Add Entry">
+      </form>
+{% for entry in task.entries_set.all %}
+
       <table class="table-success">
         <thead>
           <tr><th scope="col">Title</th><th scope="col">Date</th></tr>
         </thead>
         <tbody>
-{% for entry in task.entries_set.all %}
+
             <tr>
               <td>{{entry.title}}</td>
               <td>{{entry.date}}</td>
@@ -64,6 +62,8 @@
         </tbody>
       </table>
     </div>
-  </div>
+
+
 {% endfor %}
+</div>
 {% endblock %}
