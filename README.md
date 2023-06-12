@@ -6,24 +6,24 @@
 ## Screenshorts & WireFrame:
 
  App ScreenShots
-![Home](/static/imgs/home.png)
-![Projects](/static/imgs/projectsIndex.png)
-![ProjectsAdd](/static/imgs/addprojects.png)
+![Home](main_app/static/imgs/home.png)
+![Projects](main_app/static/imgs/projectsIndex.png)
+![ProjectsAdd](main_app/static/imgs/addproject.png)
 
 
 
 WireFrames
 
-![WireFrame Search](/static/imgs/wireframeprojects.png)
+![WireFrame Search](main_app/static/imgs/wireframeprojects.png)
 
-![WireFrame Learning](/static/imgs/wireframesearch.png)
+![WireFrame Learning](main_app/static/imgs/wireframesearch.png)
 
 
 
 
 ## Technologies Used
 
-Django, Python, CSS, Heroku, Github
+Django, Python, CSS, Heroku, Github, bootswatch(bootstrap_), YouTube API
 
 
 
@@ -34,6 +34,9 @@ My Trello Board:
 
 My App:
 <https://commit-planner.herokuapp.com//>
+
+## Icebox:
+In the future I want to correct my api call and render it in a more user friendly way. I also want the user to be able to add images to their projects as well as add the pinterest or similar API in order to have an inspiration section for people to save pins and ideas for their projects. 
 ## Instructions :
 
 You can fork and clone this repository if you are interested in creating your own version of this app. The logo's are proprietary so please use another logo for your application.  
