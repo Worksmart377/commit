@@ -5,30 +5,35 @@
 
 <table class="table table-hover">
     <thead>
-      <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Description</th>
-        <th scope="col">Due Date</th>
-        <th scope="col">Completed</th>
-      </tr>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Due Date</th>
+            <th scope="col">Completed</th>
+        </tr>
     </thead>
     <tbody>
-      <tr class="table-secondary">
-        <a href="{% url 'task_detail' task.id %}"><th scope="row">{{ task.name }}</th></a>
-        <td>{{ task.description }}</td>
-        <td>{{ task.date }}</td>
-        <td> 
-          <fieldset class="form-group">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="{% if task.completed = true %}" id="flexCheckDefault">
-            <label class="form-check-label" for="{% if task.completed == 'True' %} flexCheckChecked {% else %}flexCheckDefault {% endif %}">
-              Completed
-            </label>
-          </div>
-        </td>
-      </tr>
-      {% endfor %}
+        <tr class="table-secondary">
+            <th scope="row">
+                <a href="{% url 'task_detail' task.id %}">{{ task.name }}</a>
+            </th>
+            <td>{{ task.description }}</td>
+            <td>{{ task.date }}</td>
+            <td>
+                <fieldset class="form-group">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheck{{ task.id }}"
+                          {% if task.completed %}checked{% endif %}>
+                        <label class="form-check-label"
+                          for="flexCheck{{ task.id }}">
+                          {% if task.completed %}Completed{% else %}Not Completed{% endif %}
+                        </label>
+                    </div>
+                </fieldset>
+            </td>
+        </tr>
+    {% endfor %}
     </tbody>
-  </table>
+</table>
 
 {% endblock %}
