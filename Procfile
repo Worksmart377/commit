@@ -1,1 +1,1 @@
-web: gunicorn commit-planner.wsgi --log-file -
+web: gunicorn commit.wsgi --log-file -

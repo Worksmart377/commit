@@ -38,6 +38,8 @@
     </div>
   </div>
 </a>
+{% endfor %}
+
 <hr>
     <div class="col s6">
       <form action="{% url 'add_entry' task.id %}" method="POST">
@@ -51,15 +53,15 @@
           <tr><th scope="col">Title</th><th scope="col">Date</th></tr>
         </thead>
         <tbody>
-          {% for entry in task.entries_set.all %}
+{% for entry in task.entries_set.all %}
             <tr>
               <td>{{entry.title}}</td>
               <td>{{entry.date}}</td>
             </tr>
-          {% endfor %}
+        
         </tbody>
       </table>
     </div>
   </div>
-
+{% endfor %}
 {% endblock %}
