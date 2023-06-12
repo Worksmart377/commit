@@ -1,111 +1,65 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% if task.completed == True %}
-<h1>{{ task.name }}</h1>
-{% else %}
-<h1>{{ task.name }} is Complete!  <div class="form-check">
-    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked="">
-    <label class="form-check-label" for="flexCheckChecked">
-      Checked checkbox
-    </label>
-  </div></h1>
-{% endif %}
-<div class="alert alert-dismissible alert-warning">
-    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    <h4 class="alert-heading">Decription</h4>
-    <p class="mb-0">{{ task.description }}</p>
-  </div>
-<table class="table table-hover">
-    <thead>
-      <tr>
-        <th scope="col">Date</th>
-        <th scope="col">Journal Entries</th>
-        <th scope="col">Links</th>
-        <th scope="col">YouTube Tutorials</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr class="table-active">
-        <th scope="row">Active</th>
-        <td>Column content</td>
-        <td>Column content</td>
-        <td>Column content</td>
-      </tr>
-      <tr>
-        <th scope="row">Default</th>
-        <td>Column content</td>
-        <td>Column content</td>
-        <td>Column content</td>
-      </tr>
-      <tr class="table-primary">
-        <th scope="row">Primary</th>
-        <td>Column content</td>
-        <td>Column content</td>
-        <td>Column content</td>
-      </tr>
-      <tr class="table-secondary">
-        <th scope="row">Secondary</th>
-        <td>Column content</td>
-        <td>Column content</td>
-        <td>Column content</td>
-      </tr>
-      <tr class="table-success">
-        <th scope="row">Success</th>
-        <td>Column content</td>
-        <td>Column content</td>
-        <td>Column content</td>
-      </tr>
-      <tr class="table-danger">
-        <th scope="row">Danger</th>
-        <td>Column content</td>
-        <td>Column content</td>
-        <td>Column content</td>
-      </tr>
-      <tr class="table-warning">
-        <th scope="row">Warning</th>
-        <td>Column content</td>
-        <td>Column content</td>
-        <td>Column content</td>
-      </tr>
-      <tr class="table-info">
-        <th scope="row">Info</th>
-        <td>Column content</td>
-        <td>Column content</td>
-        <td>Column content</td>
-      </tr>
-      <tr class="table-light">
-        <th scope="row">Light</th>
-        <td>Column content</td>
-        <td>Column content</td>
-        <td>Column content</td>
-      </tr>
-      <tr class="table-dark">
-        <th scope="row">Dark</th>
-        <td>Column content</td>
-        <td>Column content</td>
-        <td>Column content</td>
-      </tr>
-    </tbody>
-  </table>
 
-  <div class="modal">
+<h1>Task Detail</h1>
+<div class="modal">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
+        <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Modal title</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            <h5 class="modal-title">{{ object.name }}</h5>
+            <h3 class="modal-title">{{ object.date }}</h5>
             <span aria-hidden="true"></span>
-          </button>
+            </button>
         </div>
         <div class="modal-body">
-          <p>Modal body text goes here.</p>
+            <p>{{ object.description }}</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary">Save changes</button>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <a class="btn btn-outline-light" href="{% url 'task_update' object.id %}">Edit</a>
+            <a class="btn btn-outline-dark" href="{% url 'task_delete' object.id %}">Delete</a>
         </div>
-      </div>
+        </div>
+    </div>
+    </div>
+    <hr>
+    {% for item in task.entries.all %}
+<a href="{% url 'entry_detail' entry.id %}">
+  <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <strong class="me-auto">{{ item.title }}</strong>
+      <small>{{ item.date }}</small>
+      <button type="button" class="btn-close ms-2 mb-1" data-bs-dismiss="toast" aria-label="Close">
+        <span aria-hidden="true"></span>
+      </button>
+    </div>
+    <div class="toast-body">
+      <p>{{ item.entry }}</p>
     </div>
   </div>
+</a>
+<hr>
+    <div class="col s6">
+      <form action="{% url 'add_entry' task.id %}" method="POST">
+          {% csrf_token %}
+          <!-- Render the inputs -->
+          {{ journal_form.as_p }}
+          <input type="submit" class="btn btn-outline-primary" value="Add Entry">
+      </form>
+      <table class="table-success">
+        <thead>
+          <tr><th scope="col">Title</th><th scope="col">Date</th></tr>
+        </thead>
+        <tbody>
+          {% for entry in task.entries_set.all %}
+            <tr>
+              <td>{{entry.title}}</td>
+              <td>{{entry.date}}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 {% endblock %}

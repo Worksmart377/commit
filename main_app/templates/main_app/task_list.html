@@ -13,16 +13,15 @@
       </tr>
     </thead>
     <tbody>
-      <tr class="table-active">
-        <a href="{% url 'task_list' task.id %}"><th scope="row">{{ task.name }}</th></a>
+      <tr class="table-secondary">
+        <a href="{% url 'task_detail' task.id %}"><th scope="row">{{ task.name }}</th></a>
         <td>{{ task.description }}</td>
         <td>{{ task.date }}</td>
         <td> 
           <fieldset class="form-group">
-          <legend class="mt-4">Checkboxes</legend>
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
+            <input class="form-check-input" type="checkbox" value="{% if task.completed = true %}" id="flexCheckDefault">
+            <label class="form-check-label" for="{% if task.completed == 'True' %} flexCheckChecked {% else %}flexCheckDefault {% endif %}">
               Completed
             </label>
           </div>

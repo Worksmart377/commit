@@ -41,11 +41,13 @@ def about(request):
 @login_required
 def projects_detail(request, project_id):
     project = Project.objects.get(id=project_id)
-    id_list = project.tasks.all().values_list('id') # [1, 3, 7]
+    id_list = project.tasks.all().values_list('id') 
+    tasks = project.tasks.all()
     tasks_project_doesnt_have = Task.objects.exclude(id__in=id_list)
     return render(request, 'projects/detail.html', 
     {
         'project': project,
+        'tasks': tasks,
         'not_tasks': tasks_project_doesnt_have,
     })
     
@@ -81,6 +83,13 @@ def task_detail(request, task_id):
 })
 
 @login_required
+def entry_detail(request, entry_id):
+    entry = Journal.objects.get(id=entry_id)
+    return render(request, 'journals/entry_detail.html', {
+    'entry':entry,         
+})
+    
+@login_required
 def add_entry(request, task_id):
     form = JournalForm(request.POST)
 
@@ -104,7 +113,7 @@ def assoc_entry(request, task_id, entry_id):
     return redirect('detail', task_id=task_id)
 
 @login_required
-def assoc_entry(request, task_id, entry_id):
+def unassoc_entry(request, task_id, entry_id):
     Task.objects.get(id=task_id).entries.remove(entry_id)
     return redirect('detail', task_id=task_id)
 

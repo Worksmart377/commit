@@ -34,7 +34,10 @@
             <a class="nav-link" href="{% url 'projects_create' %}">New Project</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">My Journal</a>
+            <a class="nav-link" href="{% url 'task_list' %}">All My Tasks</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'task_create' %}">New Task</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
