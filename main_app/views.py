@@ -19,6 +19,7 @@ import random
 from django.http import HttpRequest
 from django.contrib.auth.forms import UserCreationForm
 from .forms import JournalForm
+from django.urls import reverse_lazy
 # from .models import UrlSave
 
 
@@ -40,13 +41,25 @@ def about(request):
 @login_required
 def projects_detail(request, project_id):
     project = Project.objects.get(id=project_id)
-    id_list = Task.project.all().values_list('id')
-    tasks_project_doesnt_have = project.objects.exclude(id__in=id_list)
+    id_list = project.tasks.all().values_list('id') # [1, 3, 7]
+    tasks_project_doesnt_have = Task.objects.exclude(id__in=id_list)
     return render(request, 'projects/detail.html', 
     {
         'project': project,
-        'tasks': tasks_project_doesnt_have
+        'not_tasks': tasks_project_doesnt_have,
     })
+    
+@login_required
+def assoc_task(request, project_id, task_id):
+    Project.objects.get(id=project_id).tasks.add(task_id)
+    return redirect('detail', project_id=project_id)
+
+@login_required
+def unassoc_task(request, project_id, task_id):
+    Project.objects.get(id=project_id).tasks.remove(task_id)
+    return redirect('detail', project_id=project_id)
+
+
     
     
 @login_required
@@ -85,6 +98,18 @@ def add_entry(request, task_id):
         new_entry.save()
     return redirect('detail', task_id=task_id)
 
+@login_required
+def assoc_entry(request, task_id, entry_id):
+    Task.objects.get(id=task_id).entries.add(entry_id)
+    return redirect('detail', task_id=task_id)
+
+@login_required
+def assoc_entry(request, task_id, entry_id):
+    Task.objects.get(id=task_id).entries.remove(entry_id)
+    return redirect('detail', task_id=task_id)
+
+
+
 
 LoginRequiredMixin, 
 def signup(request):
@@ -106,30 +131,21 @@ def signup(request):
         'form': form,
         'error': error_message
     })
-
-# def assoc_task(request, project_id, task_id):
-#     Project.objects.filter(id=project_id).tasks.add(task_id)
-#     return redirect('task_list', project_id=project_id)
-
-# def unassoc_task(request, project_id, task_id):
-#     Project.objects.filter(id=project_id).tasks.remove(task_id)
-#     return redirect('detail', project_id=project_id)
     
 class ProjectCreate (LoginRequiredMixin, CreateView):
     model = Project
     fields = ['name', 'technology', 'description', 'github']
-    # success_url = '/cats/' # not the preferred way 
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
     
 class ProjectUpdate(LoginRequiredMixin, UpdateView):
     model = Project
-    fields = "__all__"    
+    fields = "['name', 'technology', 'description', 'github', 'tasks']"    
     
 class ProjectDelete(LoginRequiredMixin, DeleteView):
     model = Project
-    success_url = '/projects/'
+    success_url = '/index'
 class TaskCreate (LoginRequiredMixin, CreateView):
     model = Task
     fields = ['name', 'description', 'date', 'completed']
@@ -182,9 +198,10 @@ def search_results(request):
             maxResults=12,
             q=searched,
             order="date",
-            type='video'
+            type='video',
+            videoEmbeddable	= 'true'
         )
-
+        global variable
         results = query.execute()
 
         print(results)
@@ -194,8 +211,7 @@ def search_results(request):
         return render(request, 'search/results.html', {'results': {}})
 
 def video_query(request, results):  # Pass 'results' as an argument
-    for result in results:
-        video_id = result.id.videoId
+        video_id = results.id.videoId
         key = config('API_KEY')
         youtube = build('youtube', 'v3', developerKey=key)
         query2 = youtube.video().list(
@@ -206,10 +222,9 @@ def video_query(request, results):  # Pass 'results' as an argument
             type='video'
         )
 
-    results2 = query2.execute()
+        results2 = query2.execute()
 
-    print(results2)
-    return render(request, 'search/search_detail.html', {'results2': results2})
-
-    results = video_query(request, results)  # Pass 'results' as an argument
-            
+        print(results2)
+        return render(request, 'search/search_detail.html', {'results2': results2})
+if __name__ == "__video_Query__":
+    video_query('results')            

@@ -3,38 +3,17 @@
 {% block content %}
 
 {% if object %}
-    <h1>Update Project</h1>
+    <h1>Edit Project</h1>
 {% else %}
     <h1>Add Project</h1>
 {% endif %}
-{{ form.non_field_errors }}
-<form method="POST" action="{% url 'index' %}">
+
+<form action="" method="post">
     {% csrf_token %}
-    
-    <fieldset>
-    <div class="form-group">
-        <label for="exampleInputEmail1" class="form-label mt-4">Project Name</label>
-        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ object.name }}">
-        <p class="text-warning">{{ form.name.errors }}</p>
-    </div>
-    <div class="form-group">
-        <label for="exampleInputEmail1" class="form-label mt-4">Technology</label>
-        
-        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ object.technology }}">
-        <p class="text-warning">{{ form.technology.errors }}</p>
-
-    </div>
-    <div class="form-group">
-        <label for="exampleInputEmail1" class="form-label mt-4">Description</label>
-        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ object.description }}">
-        <p class="text-warning">{{ form.description.errors }}</p>
-
-    </div>
-    <div class="form-group">
-        <label for="exampleInputEmail1" class="form-label mt-4">GitHub Link</label>
-        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ object.github }}">
-    </div>
-    <input class="btn btn-primary" type="submit" value="{% if object %} Update Project {% else %} Add Project {% endif %}">
-    </fieldset>
+    <table>
+        {{ form.as_table }}
+    </table>
+    <input class="{% if object %} btn btn-outline-light {% else %} btn-outline-dark {% endif %}" type="submit" value="{% if object %} Update Project {% else %} Add Project {% endif %}">
 </form>
+
 {% endblock %}

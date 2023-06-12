@@ -28,8 +28,8 @@ SECRET_KEY = 'django-insecure-y7-p!h9w=8!^tfky2l$^mo4uteoy&2&yv5pxh!hs*!_d2zbzk!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['commit-planner.herokuapp.com', '127.0.0.1:8000', 'localhost']
-
+ALLOWED_HOSTS = []
+# 'commit-planner.herokuapp.com', '127.0.0.1:8000', 'localhost'
 
 # Application definition
 
