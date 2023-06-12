@@ -4,6 +4,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from dotenv import load_dotenv
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LoginView
 from django.contrib.auth import login
 from googleapiclient.discovery import build
 import os
@@ -120,7 +121,6 @@ def unassoc_entry(request, task_id, entry_id):
 
 
 
-LoginRequiredMixin, 
 def signup(request):
     # POST request
     error_message = ''
@@ -139,7 +139,17 @@ def signup(request):
     return render(request, 'registration/signup.html', {
         'form': form,
         'error': error_message
+    
     })
+    
+class CustomLoginView(LoginView):
+    template_name = 'main_app/login.html'
+    fields = '__all__'
+    redirect_authenticated_user = True
+    
+    def get_success_url(self):
+        return reverse_lazy('')
+    
     
 class ProjectCreate (LoginRequiredMixin, CreateView):
     model = Project
