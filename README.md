@@ -1,4 +1,4 @@
-# App Title: Commit Planner  (Django + Python fullstack app)
+# App Title: 📓 Commit Planner 📓  (Django + Python fullstack app)
 ## Intro & Description :
  This is the best handy dandy planner ever! It's meant to assist developers in creating new projects and keeping their tasks organized. You can add tasks and assign them to your projects. You can even search for youtube tutorials in order to implement a feature or correct and error if needed. I hope you enjoy using it as much as I enjoyed making it!
  
@@ -23,7 +23,7 @@ WireFrames
 
 ## Technologies Used
 
-Django, Python, CSS, Heroku, Github, bootswatch(bootstrap_), YouTube API
+Django, Python, CSS, Heroku, Github, bootswatch(bootstrap_), YouTube API ▶
 
 
 
