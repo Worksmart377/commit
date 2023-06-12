@@ -27,7 +27,7 @@ Django, Python, CSS, Heroku, Github, bootswatch(bootstrap_), YouTube API ▶
 
 
 
-## Getting Started 🪙 :
+## Getting Started :
 
 My Trello Board:
 <https://trello.com/b/EQsMva84/commit-app>
