@@ -36,7 +36,7 @@ My App:
 <https://commit-planner.herokuapp.com//>
 
 ## Icebox:
-In the future I want to correct my api call and render it in a more user friendly way. I also want the user to be able to add images to their projects as well as add the pinterest or similar API in order to have an inspiration section for people to save pins and ideas for their projects. 
+In the future I want to correct my api call and render it in a more user friendly way. I also want the user to be able to add images to their projects as well as add the pinterest or similar API in order to have an inspiration section for people to save pins and ideas for their projects. I also would change the structure of how to add tasks to projects for sure.
 ## Instructions :
 
 You can fork and clone this repository if you are interested in creating your own version of this app. The logo's are proprietary so please use another logo for your application.  
