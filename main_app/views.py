@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
-from .models import Project, Task, Journal, Video
+from .models import Project, Task, Journal
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from dotenv import load_dotenv
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
@@ -10,18 +9,10 @@ from googleapiclient.discovery import build
 import os
 from decouple import config
 from django.views.generic import ListView, DetailView
-import googleapiclient.errors
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from oauth2_provider.decorators import protected_resource
-from oauth2_provider.views.generic import ProtectedResourceView
-from django.http import HttpResponse
 import random
-from django.http import HttpRequest
 from django.contrib.auth.forms import UserCreationForm
 from .forms import JournalForm
 from django.urls import reverse_lazy
-# from .models import UrlSave
 
 
 # Create your views here.
@@ -76,9 +67,10 @@ def task_detail(request, task_id):
     id_list = task.entries.all().values_list('id') 
     entries_task_doesnt_have = Journal.objects.exclude(id__in=id_list)
     journal_form = JournalForm()
-
+    print(task)
     return render(request, 'tasks/task_detail.html', {
-    'task':task,         
+    'task': task,
+    'id_list': id_list,         
     'journal_form': journal_form,
     'entries':entries_task_doesnt_have
 })
@@ -117,7 +109,6 @@ def assoc_entry(request, task_id, entry_id):
 def unassoc_entry(request, task_id, entry_id):
     Task.objects.get(id=task_id).entries.remove(entry_id)
     return redirect('detail', task_id=task_id)
-
 
 
 
@@ -160,7 +151,7 @@ class ProjectCreate (LoginRequiredMixin, CreateView):
     
 class ProjectUpdate(LoginRequiredMixin, UpdateView):
     model = Project
-    fields = "['name', 'technology', 'description', 'github', 'tasks']"    
+    fields = ['name', 'technology', 'description', 'github', 'tasks']    
     
 class ProjectDelete(LoginRequiredMixin, DeleteView):
     model = Project
@@ -174,7 +165,7 @@ class TaskCreate (LoginRequiredMixin, CreateView):
     
 class TaskUpdate(LoginRequiredMixin, UpdateView):
     model = Task
-    fields = "__all__"  
+    fields = ['name', 'description', 'date', 'completed'] 
     
 class TaskDelete(LoginRequiredMixin, DeleteView):
     model = Task
@@ -217,33 +208,12 @@ def search_results(request):
             maxResults=12,
             q=searched,
             order="date",
-            type='video',
-            videoEmbeddable	= 'true'
+            type='video'
         )
-        global variable
+
         results = query.execute()
 
         print(results)
         return render(request, 'search/results.html', {'results': results})
-
     else:
         return render(request, 'search/results.html', {'results': {}})
-
-def video_query(request, results):  # Pass 'results' as an argument
-        video_id = results.id.videoId
-        key = config('API_KEY')
-        youtube = build('youtube', 'v3', developerKey=key)
-        query2 = youtube.video().list(
-            part="snippet,id,player",
-            id=video_id,
-            maxResults=1,
-            order="date",
-            type='video'
-        )
-
-        results2 = query2.execute()
-
-        print(results2)
-        return render(request, 'search/search_detail.html', {'results2': results2})
-if __name__ == "__video_Query__":
-    video_query('results')            

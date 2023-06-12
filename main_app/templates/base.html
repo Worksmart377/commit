@@ -32,6 +32,9 @@
             <a class="nav-link" href="{% url 'projects_create' %}">New Project</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="{% url 'index' %}">My Projects</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="{% url 'task_list' %}">All My Tasks</a>
           </li>
           <li class="nav-item">
@@ -50,9 +53,9 @@
           </li>
           {% endif %}
         </ul>
-        <form class="d-flex" method="get" action="{% url 'search_detail' %}">
+        <form class="d-flex" method="get" action="{% url 'search_results' %}">
           {% csrf_token %}
-          <input class="form-control me-sm-2" type="search" placeholder="Search for a Video" name="submit" value="search">
+          <input class="form-control me-sm-2" type="search" placeholder="Search for a Video" name="searched">
           <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
         </form>
       </div>

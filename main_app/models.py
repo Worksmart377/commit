@@ -1,7 +1,6 @@
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
-from embed_video.fields import EmbedVideoField
 
 
 # Create your models here. 
@@ -48,18 +47,6 @@ class Project(models.Model):
         return reverse('detail', kwargs={'project_id': self.id})
     
 
-        
-    
-class Video(models.Model):
-    title = models.CharField(max_length=50) 
-    channel_title = models.CharField(max_length=200 ,default="great channel")   
-    description = models.CharField(max_length=200, default="great description") 
-    thumbnails_default = models.URLField(default="youtube.com")
-    published_at = models.DateTimeField(default="2023-06-11")
-    url = EmbedVideoField(default='youtube.com')
-    task = models.ManyToManyField(Task)
-    
-    def __str__(self):
-        return self.title
+
         
 
