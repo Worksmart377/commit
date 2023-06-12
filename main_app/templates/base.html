@@ -50,9 +50,9 @@
           </li>
           {% endif %}
         </ul>
-        <form class="d-flex" method="get" action="{% url 'search_results' %}">
+        <form class="d-flex" method="get" action="{% url 'search_detail' %}">
           {% csrf_token %}
-          <input class="form-control me-sm-2" type="search" placeholder="Search for a Video" name="searched">
+          <input class="form-control me-sm-2" type="search" placeholder="Search for a Video" name="submit" value="search">
           <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
         </form>
       </div>
