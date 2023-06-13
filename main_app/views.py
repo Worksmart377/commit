@@ -7,6 +7,7 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth import login
 from googleapiclient.discovery import build
 import os
+
 from decouple import config
 from django.views.generic import ListView, DetailView
 import random
@@ -144,7 +145,7 @@ class CustomLoginView(LoginView):
     
 class ProjectCreate (LoginRequiredMixin, CreateView):
     model = Project
-    fields = ['name', 'technology', 'description', 'github', "tasks"]
+    fields = ['name', 'technology', 'description', 'github']
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
