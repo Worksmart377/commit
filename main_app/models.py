@@ -28,7 +28,7 @@ class Task(models.Model):
         return self.name
     
     def get_absolute_url(self):
-        return reverse('task_detail', kwargs={'pk': self.id})
+        return reverse('task_detail', kwargs={'task_id': self.id})
     
     class Meta:
         ordering = ['date']     

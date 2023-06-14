@@ -160,6 +160,7 @@ class ProjectDelete(LoginRequiredMixin, DeleteView):
 class TaskCreate (LoginRequiredMixin, CreateView):
     model = Task
     fields = ['name', 'description', 'date', 'completed']
+    
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)

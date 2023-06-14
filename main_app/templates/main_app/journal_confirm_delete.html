@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h3>Are you sure you want to delete {{ object.name }}?</h3>
+
+<form action="" method="post">
+    <div class="nav-item pills">
+    {% csrf_token %}
+    <input class="btn badge bg-dark" type="submit" value="Yes - Delete">
+    <a class="btn badge bg-light" href="{% url 'entry_detail' object.id %}">No - Cancel</a>
+</div>
+</form>
+
+
+{% endblock %}
