@@ -11,6 +11,7 @@ gunicorn = "*"
 django-allauth = "*"
 django-oauth-toolkit = "*"
 django-cors-headers = "*"
+django-embed-video = "*"
 
 [dev-packages]
 
