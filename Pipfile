@@ -13,6 +13,7 @@ django-oauth-toolkit = "*"
 django-cors-headers = "*"
 django-embed-video = "*"
 google-api-python-client = "*"
+python-decouple = "*"
 
 [dev-packages]
 
