@@ -10,6 +10,7 @@ django-heroku = "*"
 gunicorn = "*"
 django-allauth = "*"
 django-oauth-toolkit = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 
