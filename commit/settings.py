@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
-import django_heroku
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -26,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-y7-p!h9w=8!^tfky2l$^mo4uteoy&2&yv5pxh!hs*!_d2zbzk!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['commit-planner.herokuapp.com', '127.0.0.1:8000', 'localhost', "127.0.0.1"]
 # 'commit-planner.herokuapp.com', '127.0.0.1:8000', 'localhost'
@@ -81,7 +80,7 @@ OAUTH2_PROVIDER = {
     'REFRESH_TOKEN_EXPIRE_SECONDS': 3600 * 24 * 365,
 }
 
-# django_heroku.settings(locals())
+
 CORS_ORIGIN_ALLOW_ALL = True
 
 
@@ -180,3 +179,6 @@ LOGOUT_REDIRECT_URL = '/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+import django_heroku
+django_heroku.settings(locals())

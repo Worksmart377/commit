@@ -218,3 +218,5 @@ def search_results(request):
         return render(request, 'search/results.html', {'results': results})
     else:
         return render(request, 'search/results.html', {'results': {}})
+
+        
