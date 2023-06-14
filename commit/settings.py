@@ -80,10 +80,7 @@ OAUTH2_PROVIDER = {
     'REFRESH_TOKEN_EXPIRE_SECONDS': 3600 * 24 * 365,
 }
 
-
 CORS_ORIGIN_ALLOW_ALL = True
-
-
 
 ROOT_URLCONF = 'commit.urls'
 
@@ -142,7 +139,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -154,9 +150,9 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
+
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 STATIC_HOST = os.environ.get("DJANGO_STATIC_HOST", "")
 
@@ -166,12 +162,12 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'main_app/static'),
 )
 
-STORAGES = {
-    # ...
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
+# STORAGES = {
+#     "staticfiles": {
+#         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+#     },
+# }
+
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
