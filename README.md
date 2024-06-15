@@ -33,8 +33,7 @@ My Trello Board:
 <https://trello.com/b/EQsMva84/commit-app>
 
 My App:
-<https://commit-planner.herokuapp.com//>
-
+ New Version Coming Soon! (under construction) 
 ## Icebox:
 In the future I want to correct my api call and render it in a more user friendly way. I also want the user to be able to add images to their projects as well as add the pinterest or similar API in order to have an inspiration section for people to save pins and ideas for their projects. I also would change the structure of how to add tasks to projects for sure.
 ## Instructions :
